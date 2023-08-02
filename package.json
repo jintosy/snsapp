@@ -1,0 +1,17 @@
+{
+  "name": "sns",
+  "version": "1.0.0",
+  "description": "sns",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js"
+  },
+  "author": "Jintosy",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "helmet": "^7.0.0",
+    "mongoose": "^7.4.1",
+    "nodemon": "^3.0.1"
+  }
+}
