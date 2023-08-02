@@ -4,8 +4,22 @@ const userRoute = require("./routes/users");
 const authRoute = require("./routes/auth");
 const postRoute = require("./routes/posts");
 const PORT = 3000;
+const mongoose = require("mongoose");
+require("dotenv").config();
 
-// "/api/users"をuserRouteでのルートディレクトリに設定可能
+// DB接続
+mongoose
+  .connect(process.env.MONGOURL)
+  .then(() => {
+    console.log("connect success!");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+
+// データはjson形式
+app.use(express.json());
 app.use("/api/users", userRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/posts", postRoute);
