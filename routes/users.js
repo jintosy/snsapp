@@ -32,10 +32,19 @@ router.delete("/:id", async (req, res) => {
   } else {
     return res.status(403).json("自分のアカウントのみ削除可能です");
   }
-})
+});
 
 
 // ユーザ情報の取得
+router.get("/:id", async (req, res) => {
+  try {
+    // 検索実行
+    const user = await User.findById(req.params.id);
+    res.status(200).json(user);
+  } catch (err) {
+    return res.status(500).json(err);
+  }
+});
 
 
 
