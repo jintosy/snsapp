@@ -57,4 +57,18 @@ router.delete("/:id", async (req, res) => {
 });
 
 
+// 指定の投稿の情報を取得する
+// /api/posts/:id
+router.get("/:id", async (req, res) => {
+  try {
+    // 返す特定の投稿を取得
+    const post = await Post.findById(req.params.id);
+
+    return res.status(200).json(post);
+  } catch (err) {
+    return res.status(500).json(err);
+  }
+});
+
+
 module.exports = router;
