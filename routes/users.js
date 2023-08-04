@@ -85,4 +85,39 @@ router.put("/:id/follow", async (req, res) => {
 });
 
 
+// ユーザのフォロー解除
+router.put("/:id/unfollow", async (req, res) => {
+  // 自分自身でなければフォロー解除処理実行
+  if (req.body.userId !== req.params.id) {
+    try {
+      // フォロー解除するユーザ情報を取得
+      const user = await User.findById(req.params.id);
+      // 自分のユーザ情報を取得
+      const currentUser = await User.findById(req.body.userId);
+      // フォロワー一覧に自分が含まれていれば解除可能
+      if (user.followers.includes(req.body.userId)) {
+        // 解除するユーザのフォロワー一覧から自分を削除
+        await user.updateOne({
+          $pull: {
+            followers: req.body.userId,
+          }
+        });
+        // 自分のフォロー一覧から解除ユーザを削除
+        await currentUser.updateOne({
+          $pull: {
+            followings: req.params.id,
+          }
+        });
+
+        return res.status(200).json("フォロー解除に成功しました");
+      } else {
+        return res.status(403).json("フォローしていない為解除不可です");
+      }
+    } catch (err) {
+      return res.status(500).json(err);
+    }
+  }
+});
+
+
 module.exports = router;
