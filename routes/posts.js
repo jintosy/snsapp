@@ -37,5 +37,24 @@ router.put("/:id", async (req, res) => {
 });
 
 
+// 投稿を削除する
+// /api/posts/:id
+router.delete("/:id", async (req, res) => {
+  try {
+    // 削除対象の投稿情報を取得
+    const post = await Post.findById(req.params.id);
+
+    // 投稿を行ったユーザのみが削除実行可能
+    if (post.userId === req.body.userId) {
+      await post.deleteOne();
+      return res.status(200).json("投稿の削除に成功しました");
+    } else {
+      return res.status(403).json("自分の投稿のみ削除可能です");
+    }
+  } catch (err) {
+    return res.status(500).json(err);
+  }
+});
+
 
 module.exports = router;
