@@ -15,5 +15,27 @@ router.post("/", async (req, res) => {
 });
 
 
+// 投稿を更新する
+// /api/posts/:id
+router.put("/:id", async (req, res) => {
+  try {
+    // 更新対象の投稿情報を取得
+    const post = await Post.findById(req.params.id);
+
+    // 投稿したユーザのみが編集可能なのでチェック
+    if (post.userId === req.body.userId) {
+      await post.updateOne({
+        $set: req.body
+      });
+      return res.status(200).json("投稿の更新に成功しました");
+    } else {
+      return res.status(403).json("自分の投稿のみ更新可能です");
+    }
+  } catch (err) {
+    return res.status(403).json(err);
+  }
+});
+
+
 
 module.exports = router;
