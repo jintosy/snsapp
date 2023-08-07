@@ -71,4 +71,33 @@ router.get("/:id", async (req, res) => {
 });
 
 
+// 指定の投稿にいいねを送信する
+// /api/posts/:id/like
+router.put("/:id/like", async (req, res) => {
+  try {
+    // 対象の投稿
+    const post = await Post.findById(req.params.id);
+
+    // いいね一覧に自分のidが無ければいいね送信可能なので送る
+    if (!post.likes.includes(req.body.userId)) {
+      await post.updateOne({
+        $push: {
+          likes: req.body.userId,
+        }
+      });
+      return res.status(200).json("投稿にいいねを送信しました");
+    } else {
+      // 一覧にidが存在する場合は既に送っているので解除を行う
+      await post.updateOne({
+        $pull: {
+          likes: req.body.userId,
+        }
+      });
+      return res.status(200).json("いいねを取り消しました");
+    }
+  } catch (err) {
+    return res.status(500).json(err);
+  }
+});
+
 module.exports = router;
