@@ -3,6 +3,7 @@ const User = require("../models/User");
 
 
 // ユーザ登録
+// POST /api/auth/register
 router.post("/register", async (req, res) => {
   try {
     const newUser = await new User({
@@ -20,6 +21,7 @@ router.post("/register", async (req, res) => {
 
 
 // ログイン
+// POST /api/auth/login
 router.post("/login", async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });

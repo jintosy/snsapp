@@ -2,6 +2,7 @@ const router = require("express").Router();
 const User = require("../models/User");
 
 // ユーザ取得の更新
+// PUT /api/users/:id
 router.put("/:id", async (req, res) => {
   // ユーザ自体か管理者であれば更新可能とする
   if (req.body.userId === req.params.id || req.body.isAdmin) {
@@ -19,6 +20,7 @@ router.put("/:id", async (req, res) => {
 });
 
 // ユーザ情報の削除
+// DELETE /api/users/:id
 router.delete("/:id", async (req, res) => {
   // ユーザ自体か管理者であれば削除可能とする
   if (req.body.userId === req.params.id || req.body.isAdmin) {
@@ -36,6 +38,7 @@ router.delete("/:id", async (req, res) => {
 
 
 // ユーザ情報の取得
+// GET /api/users/:id
 router.get("/:id", async (req, res) => {
   try {
     // 検索実行
@@ -49,6 +52,7 @@ router.get("/:id", async (req, res) => {
 
 
 // ユーザのフォロー
+// PUT /api/users/:id/follow
 router.put("/:id/follow", async (req, res) => {
   // これからフォローするユーザのIDが等しくない
   // = 自分じゃなければフォロー処理を行う
@@ -86,6 +90,7 @@ router.put("/:id/follow", async (req, res) => {
 
 
 // ユーザのフォロー解除
+// PUT /api/users/:id/unfollow
 router.put("/:id/unfollow", async (req, res) => {
   // 自分自身でなければフォロー解除処理実行
   if (req.body.userId !== req.params.id) {

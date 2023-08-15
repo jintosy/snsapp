@@ -3,7 +3,7 @@ const Post = require("../models/Post");
 const User = require("../models/User");
 
 // 投稿を作成する
-// api/posts/
+// POST api/posts/
 router.post("/", async (req, res) => {
   const newPost = new Post(req.body);
   try {
@@ -16,7 +16,7 @@ router.post("/", async (req, res) => {
 
 
 // 投稿を更新する
-// /api/posts/:id
+// PUT /api/posts/:id
 router.put("/:id", async (req, res) => {
   try {
     // 更新対象の投稿情報を取得
@@ -38,7 +38,7 @@ router.put("/:id", async (req, res) => {
 
 
 // 投稿を削除する
-// /api/posts/:id
+// DELETE /api/posts/:id
 router.delete("/:id", async (req, res) => {
   try {
     // 削除対象の投稿情報を取得
@@ -58,7 +58,7 @@ router.delete("/:id", async (req, res) => {
 
 
 // 指定の投稿の情報を取得する
-// /api/posts/:id
+// GET /api/posts/:id
 router.get("/:id", async (req, res) => {
   try {
     // 返す特定の投稿を取得
@@ -72,7 +72,7 @@ router.get("/:id", async (req, res) => {
 
 
 // 指定の投稿にいいねを送信する
-// /api/posts/:id/like
+// PUT /api/posts/:id/like
 router.put("/:id/like", async (req, res) => {
   try {
     // 対象の投稿
@@ -102,7 +102,7 @@ router.put("/:id/like", async (req, res) => {
 
 
 // タイムラインの投稿を取得する
-// /api/posts/timeline/all
+// GET /api/posts/timeline/all
 router.get("/timeline/all", async (req, res) => {
   try {
     const currentUser = await User.findById(req.body.userId);
